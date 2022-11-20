@@ -23,7 +23,7 @@ default: client-server
 ############### Set up Mininet and Controller ######################
 ####################################################################
 
-SCRIPTS = ../scripts
+SCRIPTS = scripts
 
 export name ?=
 
