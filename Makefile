@@ -98,7 +98,7 @@ server:
 ####################################################################
 
 tests:
-	make -f Tests.mak all-tests
+	make -f Congestion_Tests.mak all-tests
 
 
 clean:
