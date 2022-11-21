@@ -19,7 +19,7 @@
 
 export PORT ?= 11111
 
-SCRIPTS = ../scripts
+SCRIPTS = scripts
 
 SRCS_DIR = ./srcs
 SCS = $(SRCS_DIR)/server # Student C server
