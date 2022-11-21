@@ -118,7 +118,7 @@ $ make clean
 $ make client-server
 ```
 
-Then we can run the scripts to let at most $nhost - 1$ clients currently sent message to the server. The following script will let host h2 send $nbits=10$ bits to host h1 and test the client code both in C code and python code. 
+Then we can run the scripts to let at most $nhost - 1$ clients concurrently sent message to the server. The following script will let host h2 send $nbits=10$ bits to host h1 and test the client code both in C code and python code. 
 ```sh
 $ make tests nhost=2 nbits=10
 ```
