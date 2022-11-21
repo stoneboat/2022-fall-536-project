@@ -11,7 +11,7 @@ SCS=$SRCS_DIR/server # Student C server
 SCC=$SRCS_DIR/client # Student C client
 SPC=$SRCS_DIR/client-3wh.py # Student 3WH python client
 
-WORKSPACE_DIR=$SRCS_DIR/.workspace
+WORKSPACE_DIR=.workspace
 
 #	Generate a long random input
 mkdir -p $WORKSPACE_DIR

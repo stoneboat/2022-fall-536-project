@@ -109,3 +109,61 @@ You will see some updates printed on the first terminal, where ONOS is running. 
 $ cd 2022-fall-536-project
 $ make mininet-prereqs
 ```
+
+### c. Start the multi-client test
+We first clean the workspace and compile the client and server code.
+```sh
+$ cd 2022-fall-536-project
+$ make clean
+$ make client-server
+```
+
+Then we can run the scripts to let at most $nhost - 1$ clients currently sent message to the server. The following script will let host h2 send $nbits=10$ bits to host h1 and test the client code both in C code and python code. 
+```sh
+$ make tests nhost=2 nbits=10
+```
+
+Recall we build a mininet with 6 host, that is one server on one side and 5 clients on the other side, you can run at least $nhost=2$ and at most $nhost=6$ in the above code.
+
+If you want to test only the C code client, please run the following
+```sh
+$ make -f Congestion_Tests.mak tests-c nhost=2 nbits=100
+```
+
+and for only the python code client, run the following
+```sh
+$ make -f Congestion_Tests.mak tests-python nhost=2 nbits=100
+```
+
+To check the messnage sent and received, at the project root directory do the following
+```sh
+$ cd .workspace/
+```
+and you can find files like the below.
+```
+test_message_2.txt  test_message_4.txt  test_message_6.txt
+test_message_3.txt  test_message_5.txt  test_output.text
+```
+
+For more information please check the make files
+```
+Makefile 
+Congestion_Tests.mak
+```
+scripts
+```
+./scripts/project
+```
+and mininet configuration files
+```
+./cfg/topo-2sw-nhost.py
+```
+
+### d. Warning
+In fact, you will find when running 
+```sh
+$ make -f Congestion_Tests.mak tests-python nhost=3 nbits=100
+```
+the cmd will be stuck, this is because server C code now can accept one client each time and Python client code is too slow (maybe have bug) to send message. Please correct those code to suit our goal. 
+
+
