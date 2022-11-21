@@ -1,0 +1,50 @@
+#!/bin/bash
+
+PORT=11111
+nhost=$1
+nbits=$2
+
+SCRIPTS_DIR=./scripts
+
+SRCS_DIR=./srcs
+SCS=$SRCS_DIR/server # Student C server
+SCC=$SRCS_DIR/client # Student C client
+SPC=$SRCS_DIR/client-3wh.py # Student 3WH python client
+
+WORKSPACE_DIR=$SRCS_DIR/.workspace
+
+#	Generate a long random input
+mkdir -p $WORKSPACE_DIR
+for hostId in `seq 2 $nhost`
+do 
+	$(echo "=== h$hostId Go Boilermakers! ===\n" \
+		> $WORKSPACE_DIR/test_message_$hostId.txt ) 
+
+	$(head -c$nbits /dev/urandom | LC_ALL=C tr -dc 'a-zA-Z0-9' \
+		>> $WORKSPACE_DIR/test_message_$hostId.txt \
+	)&
+done
+wait
+
+
+#	Start the server
+$SCRIPTS_DIR/utils/mn-stratum/exec-d-script h1 \
+	"$SCS $PORT > $WORKSPACE_DIR/test_output.text"
+sleep 0.2
+
+#	Let the client send message to server
+SCRIPT=$SCRIPTS_DIR/utils/mn-stratum/exec-script
+
+for hostId in `seq 2 $nhost`
+do 
+		$($SCRIPT h$hostId "$SPC 10.0.0.1 $PORT < $WORKSPACE_DIR/test_message_$hostId.txt > /dev/null") &
+done
+wait
+
+
+#	Stop the server
+$SCRIPTS_DIR/utils/mn-stratum/exec-d-script h1 \
+	"pkill -f $SCS"
+sleep 0.2
+
+

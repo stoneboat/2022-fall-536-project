@@ -19,12 +19,14 @@ export nbits ?= 2
 
 # Usage: make -f Congestion_Tests.mak tests-c nhost=2 nbits=100
 tests-c: 
+	@echo "start the c code routing time test"
 	@$(SCRIPTS_DIR)/project/parallel-client-c-sh $(nhost) $(nbits)
 
 
-# Usage: make -f Congestion_Tests.mak tests-python nhost=2	
+# Usage: make -f Congestion_Tests.mak tests-python nhost=2 nbits=100
 tests-python: 
-	@echo Have not implemented yet
+	@echo "start the python code routing time test"
+	@$(SCRIPTS_DIR)/project/parallel-client-python-sh $(nhost) $(nbits)
 
 	
 all-tests: tests-c tests-python
