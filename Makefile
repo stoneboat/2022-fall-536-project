@@ -83,14 +83,10 @@ GCC = gcc:4.9
 SRCS = srcs
 PWD = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-client-server: client server
-
-client:
-	echo "$(PWD)"
+client-server: 
 	docker run --rm -v "$(PWD)":/workdir -w /workdir $(GCC) \
 		gcc -o $(SRCS)/client $(SRCS)/client.c
 
-server:
 	docker run --rm -v "$(PWD)":/workdir -w /workdir $(GCC) \
 		gcc -o $(SRCS)/server $(SRCS)/server.c
 
