@@ -28,6 +28,7 @@ SCRIPTS = scripts
 export name ?=
 
 export nhost ?= 2
+export nbits ?= 2
 
 MAKEFLAGS += --no-print-directory
 
@@ -80,7 +81,7 @@ host:
 
 GCC = gcc:4.9
 SRCS = srcs
-PWD = /home/ubuntu/public/assignments/assignment1
+PWD = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 client-server: client server
 
@@ -97,9 +98,10 @@ server:
 ###3###################### Run tests ###############################
 ####################################################################
 
-# Usage: make tests nhost=2
+# Usage: make tests nhost=2 nbits=100
 tests:
-	make -f Congestion_Tests.mak all-tests nhost=$(nhost)
+	@echo "$(PWD)"
+	@make -f Congestion_Tests.mak all-tests nhost=$(nhost) nbits=$(nbits)
 
 
 clean:

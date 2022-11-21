@@ -1,7 +1,8 @@
 #!/bin/bash
 
 PORT=11111
-nhost=6
+nhost=$1
+nbits=$2
 
 SCRIPTS_DIR=./scripts
 
@@ -16,9 +17,12 @@ WORKSPACE_DIR=$SRCS_DIR/.workspace
 mkdir -p $WORKSPACE_DIR
 for hostId in `seq 2 $nhost`
 do 
-	$(echo "h$hostId Go Boilermakers! gogogo\n" \
-		> $WORKSPACE_DIR/test_message_$hostId.txt \
-	) &
+	$(echo "=== h$hostId Go Boilermakers! ===\n" \
+		> $WORKSPACE_DIR/test_message_$hostId.txt ) 
+
+	$(head -c$nbits /dev/urandom | LC_ALL=C tr -dc 'a-zA-Z0-9' \
+		>> $WORKSPACE_DIR/test_message_$hostId.txt \
+	)&
 done
 wait
 
