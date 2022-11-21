@@ -20,7 +20,8 @@ export nhost ?= 2
 tests-c: 
 	@#	Generate a long random input
 	@mkdir -p $(WORKSPACE_DIR)
-	@head -c100 /dev/urandom | LC_ALL=C tr -dc 'a-zA-Z0-9' > $(WORKSPACE_DIR)/test_message.txt
+	@echo "Go Boilermakers!\n" > $(WORKSPACE_DIR)/test_message.txt
+	@#@head -c100 /dev/urandom | LC_ALL=C tr -dc 'a-zA-Z0-9' > $(WORKSPACE_DIR)/test_message.txt
 
 	@#	Start the server
 	@mkdir -p $(WORKSPACE_DIR)
@@ -33,7 +34,6 @@ tests-c:
 	do \
 		$(SCRIPTS)/utils/mn-stratum/exec-script h$$hostId \
 		"$(SCC) 10.0.0.1 $(PORT) < $(WORKSPACE_DIR)/test_message.txt > /dev/null"; \
-		sleep 0.1; \
 	done
 
 	@#	Stop the server
