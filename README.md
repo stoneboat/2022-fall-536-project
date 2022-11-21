@@ -135,7 +135,7 @@ and for only the python code client, run the following
 $ make -f Congestion_Tests.mak tests-python nhost=2 nbits=100
 ```
 
-To check the messnage sent and received, at the project root directory do the following
+To check the message sent and received, at the project root directory, do the following
 ```sh
 $ cd .workspace/
 ```
@@ -145,7 +145,7 @@ test_message_2.txt  test_message_4.txt  test_message_6.txt
 test_message_3.txt  test_message_5.txt  test_output.text
 ```
 
-For more information please check the make files
+For more information please check the Make files
 ```
 Makefile 
 Congestion_Tests.mak
@@ -164,6 +164,6 @@ In fact, you will find when running
 ```sh
 $ make -f Congestion_Tests.mak tests-python nhost=3 nbits=100
 ```
-the cmd will be stuck, this is because server C code now can accept one client each time and Python client code is too slow (maybe have bug) to send message. Please correct those code to suit our goal. 
+the cmd will be stuck, this is because server C code now can accept one client each time and Python client code is too slow (may have bug) to send message. Please correct those code to suit our goal. 
 
 
