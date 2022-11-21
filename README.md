@@ -54,7 +54,6 @@ s1 lo:  s1-eth1:h2-eth0 s1-eth2:h3-eth0 s1-eth3:h4-eth0 s1-eth4:h5-eth0 s1-eth5:
 s2 lo:  s2-eth1:s1-eth6 s2-eth2:h1-eth0
 ```
 
-This shows three nodes in this network: `h1`, `h2`, and `s1`. For `h1` and `h2`, their `eth0` interface is connected to switch `s1` `eth1` and `eth2` interfaces, respecitvely.
 
 > **Note:** Visit [http://mininet.org/walkthrough/](http://mininet.org/walkthrough/) to learn more about Mininet and the various commands you can run inside it.
 
