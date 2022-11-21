@@ -27,6 +27,8 @@ SCRIPTS = scripts
 
 export name ?=
 
+export nhost ?= 2
+
 MAKEFLAGS += --no-print-directory
 
 .PHONY: mininet controller cli netcfg host-h1 host-h2 tests
@@ -43,8 +45,9 @@ help:
 	@echo "- Access Host: make host name=h1\n"
 	@echo "- Clean All: make clean\n"
 
+# Usage: make mininet nhost=2
 mininet:
-	$(SCRIPTS)/mn-stratum --topo linear,2
+	$(SCRIPTS)/mn-stratum --custom cfg/topo-2sw-nhost.py --topo testTopo,$(nhost) 
 
 mininet-prereqs:
 	docker exec -it mn-stratum bash -c \

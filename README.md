@@ -21,10 +21,12 @@ This will start the ONOS controller. You will see a lot of information printed o
 
 ```sh
 $ cd 2022-fall-536-project
-$ make mininet
+$ make mininet nhost=6
 ```
 
 Once started, you will see the `mininet>` prompt. This indicates that your virtual network is ready and running, and you can now issue commands through this prompt.
+
+This will give us a topology looks like host 2,3,...,n --- switch 1 --- switch 2 --- host 1, you can change the parameter nhost to choose the number clients in one side of the switch. 
 
 Let's try listing the hosts and switches in this network and their connectivity. Enter ...
 
@@ -35,9 +37,21 @@ mininet> net
 Output:
 ```
 mininet> net
-h1 h1-eth0:s1-eth1
-h2 h2-eth0:s1-eth2
-s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0
+h1 h1-eth0:s2-eth2
+
+h2 h2-eth0:s1-eth1
+
+h3 h3-eth0:s1-eth2
+
+h4 h4-eth0:s1-eth3
+
+h5 h5-eth0:s1-eth4
+
+h6 h6-eth0:s1-eth5
+
+s1 lo:  s1-eth1:h2-eth0 s1-eth2:h3-eth0 s1-eth3:h4-eth0 s1-eth4:h5-eth0 s1-eth5:h6-eth0 s1-eth6:s2-eth1
+
+s2 lo:  s2-eth1:s1-eth6 s2-eth2:h1-eth0
 ```
 
 This shows three nodes in this network: `h1`, `h2`, and `s1`. For `h1` and `h2`, their `eth0` interface is connected to switch `s1` `eth1` and `eth2` interfaces, respecitvely.
@@ -89,3 +103,9 @@ $ make netcfg
 ```
 
 You will see some updates printed on the first terminal, where ONOS is running. Ignore `ERROR`; it's a bug (or typo) in ONOS.
+
+- And then in the same terminal, install Mininet prerequisites and dependencies. (Make sure Mininet is running in another terminal before executing this command).
+```sh
+$ cd 2022-fall-536-project
+$ make mininet-prereqs
+```
