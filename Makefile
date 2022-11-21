@@ -97,8 +97,9 @@ server:
 ###3###################### Run tests ###############################
 ####################################################################
 
+# Usage: make tests nhost=2
 tests:
-	make -f Congestion_Tests.mak all-tests
+	make -f Congestion_Tests.mak all-tests nhost=$(nhost)
 
 
 clean:
