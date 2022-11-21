@@ -1,6 +1,6 @@
 ### a. Collaborator list and Acknowledgement
 
-The markdown file is power by the online md editior [https://stackedit.io](https://stackedit.io/app#) 
+The markdown file is powered by the online md editior [https://stackedit.io](https://stackedit.io/app#) 
 
 The readme content is supported by the 535 course website [https://gitlab.com/purdue-cs536/fall-2022/public](https://gitlab.com/purdue-cs536/fall-2022/public)
 
