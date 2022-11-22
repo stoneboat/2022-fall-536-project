@@ -26,10 +26,9 @@ do
 done
 wait
 
-
 #	Start the server
 $SCRIPTS_DIR/utils/mn-stratum/exec-d-script h1 \
-	"$SCS $PORT > $WORKSPACE_DIR/test_output.text"
+		"$SCS $PORT $(( $nhost - 1 )) > $WORKSPACE_DIR/test_output.txt"
 sleep 0.2
 
 #	Let the client send message to server
@@ -37,7 +36,7 @@ SCRIPT=$SCRIPTS_DIR/utils/mn-stratum/exec-script
 
 for hostId in `seq 2 $nhost`
 do 
-		$($SCRIPT h$hostId "$SCC 10.0.0.1 $PORT < $WORKSPACE_DIR/test_message_$hostId.txt > /dev/null") &
+		$SCRIPT h$hostId "$SCC 10.0.0.1 $PORT < $WORKSPACE_DIR/test_message_$hostId.txt > /dev/null" 
 done
 wait
 

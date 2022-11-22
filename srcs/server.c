@@ -20,7 +20,7 @@
 /*
  * server.c
  * Name: Zhongtang Luo, Yu Wei
- * PUID: 32759316, 
+ * PUID: 32759316,
  */
 
 #include <arpa/inet.h>
@@ -36,8 +36,10 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define QUEUE_LENGTH 10
+#define QUEUE_LENGTH 10000
 #define RECV_BUFFER_SIZE 2048
+
+int number_of_clients;
 
 /* TODO: server()
  * Open socket and wait for client to connect
@@ -45,17 +47,18 @@
  * Return 0 on success, non-zero on failure
  */
 int server(char *server_port) {
-  int sockfd, new_fd;  
+  int sockfd, new_fd;
   struct addrinfo hints, *servinfo, *p;
   struct sockaddr_storage their_addr;
   socklen_t sin_size;
   int yes = 1;
   int recv_bytes;
   char recv_buf[RECV_BUFFER_SIZE];
+  int cnt = 0;
   int rv;
 
   /* The address binding is inspired by Beej: https://beej.us/guide/bgnet/
-  */
+   */
   memset(&hints, 0, sizeof hints);
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
@@ -92,7 +95,7 @@ int server(char *server_port) {
     return 1;
   }
 
-  while (1) {  
+  for (; cnt < number_of_clients; ++cnt) {
     sin_size = sizeof their_addr;
     new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
     if (new_fd == -1) {
@@ -100,13 +103,22 @@ int server(char *server_port) {
       continue;
     }
 
-    while ((recv_bytes = recv(new_fd, recv_buf, RECV_BUFFER_SIZE, 0)) > 0) {
-      fwrite(recv_buf, 1, recv_bytes, stdout);
-      fflush(stdout);
+    /* Inspired by Beej: https://beej.us/guide/bgnet/
+     */
+    if (!fork()) {    
+      close(sockfd);  
+      while ((recv_bytes = recv(new_fd, recv_buf, RECV_BUFFER_SIZE, 0)) > 0) {
+        fwrite(recv_buf, 1, recv_bytes, stdout);
+        fflush(stdout);
+      }
+      close(new_fd);
+      exit(0);
     }
-    close(new_fd);
+
+    close(new_fd); 
   }
 
+  while (wait(NULL) > 0);
   return 0;
 }
 
@@ -117,11 +129,12 @@ int server(char *server_port) {
 int main(int argc, char **argv) {
   char *server_port;
 
-  if (argc != 2) {
-    fprintf(stderr, "Usage: ./server-c (server port)\n");
+  if (argc != 3) {
+    fprintf(stderr, "Usage: ./server-c (server port) (number of clients)\n");
     exit(EXIT_FAILURE);
   }
 
   server_port = argv[1];
+  number_of_clients = atoi(argv[2]);
   return server(server_port);
 }

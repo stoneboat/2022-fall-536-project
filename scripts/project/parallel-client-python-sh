@@ -29,7 +29,7 @@ wait
 
 #	Start the server
 $SCRIPTS_DIR/utils/mn-stratum/exec-d-script h1 \
-	"$SCS $PORT > $WORKSPACE_DIR/test_output.text"
+	"$SCS $PORT $(( $nhost - 1 )) > $WORKSPACE_DIR/test_output.txt"
 sleep 0.2
 
 #	Let the client send message to server
